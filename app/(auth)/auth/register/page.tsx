@@ -3,17 +3,18 @@
 import AuthCardWrapper from "@/components/auth/auth-card-wrapper";
 import CustomForm from "@/components/forms/custom-form";
 import CustomFormInput from "@/components/forms/custom-formfield";
-import { signInSchema, signUpSchema } from "@/lib/schemas/auth-schemas";
+import { signUpSchema } from "@/lib/schemas/auth-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { registerUserAction } from "./actions";
 
 
-type signUpType = z.infer <typeof signInSchema>
+export type signUpType = z.infer <typeof signUpSchema>
 
 export default function SignUp(){
 
     const subLogic = async(data:signUpType) => {
-        console.log("DATA",data)
+        registerUserAction(data)
     }
     return (
         <>
