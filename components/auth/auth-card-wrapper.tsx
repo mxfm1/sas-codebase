@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { CardContent, CardHeader, CardTitle } from "../ui/card";
 import Separator from "../separator";
 import SocialsSection from "./socials-section";
 
@@ -15,19 +15,20 @@ export default function AuthCardWrapper({
     children
 }:CardAuthWrapperProps){
     return (
-        <Card className="max-w-[350px]">
+        <div className="max-w-full">
             <CardHeader>
-                <CardTitle>{title}</CardTitle>
+                <CardTitle className="text-center text-2xl">{title}</CardTitle>
+                {/* <CardDescription>Pioneros en la capacitacion de profesionales</CardDescription> */}
             </CardHeader>
-            <CardContent>
+            <CardContent className="border-none shadow-white">
                 {children}
             </CardContent>
             {showSocials && (
                 <>
-                    <Separator label="O inicia sesión"/>
+                    <Separator label="O inicia sesión" className="pt-6"/>
                     <SocialsSection />
                 </>
             )}
-        </Card>
+        </div>
     )
 }

@@ -1,22 +1,21 @@
 'use server'
 
-import { signUpSchema } from "@/lib/schemas/auth-schemas"
-import { signUpType } from "./page"
-import { db } from "@/db"
-import { users } from "@/db/schema"
-import bcrypt from 'bcryptjs'
+import { registerSchema } from "@/lib/schemas/auth-schemas"
+import { unauthenticatedAction } from "@/lib/safe-actions"
+import { registerUserUseCase } from "@/use-cases/users"
+import { signIn } from "@/auth"
+import { DEFAULT_LOGIN_REDIRECT } from "@/app-config"
 
-export const registerUserAction = async(values:signUpType) => {
-    const parsedData = signUpSchema.safeParse(values)
-
-    const{ email,password} = parsedData.data
-
-    const hashedPassword = await bcrypt.hash(password,10)
-
-    const user = await db.insert(users).values({
-        email,
-        password:hashedPassword,
+export const registerUserAction = unauthenticatedAction
+    .createServerAction()
+    .input(registerSchema)
+    .handler(async({input:{name,email,password}}) => {
+        const newUser = await registerUserUseCase(name,email,password)
+        if(newUser){
+            await signIn("credentials",{
+                email,
+                password,
+                redirectTo: DEFAULT_LOGIN_REDIRECT
+            })
+        }
     })
-
-    
-}

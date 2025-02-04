@@ -1,20 +1,24 @@
 'use client'
 
+import { LucideIcon } from "lucide-react";
 import { FormControl, FormField, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { useFormContext } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
 type CustomFormInputProps = {
     label?:string;
     name:string;
     placeholder?:string;
     type:string;
+    icon?:LucideIcon;
 }
 
 export default function CustomFormInput({
     name,
     placeholder,
-    type
+    type,
+    icon:Icon
 }:CustomFormInputProps){
 
     const { control } = useFormContext()
@@ -25,14 +29,20 @@ export default function CustomFormInput({
             render={({field}) => (
                 <>
                     <FormControl>
-                        <Input 
-                            placeholder={placeholder}
-                            type={type}
-                            {...field}
-                        />
+                        <div className="relative">
+                            {Icon && (<Icon className="w-5 h-5 absolute top-1/2 -translate-y-1/2 left-2 text-slate-500" />)}
+                            <Input
+                                placeholder={placeholder}
+                                type={type}
+                                {...field}
+                                className={cn(
+                                    "",Icon ? "pl-8" : ""
+                                )}
+                            />
+                        </div>
                     </FormControl>
                     <div className="relative">
-                        <FormMessage className="absolute -top-6 left-2"/>
+                        <FormMessage className="absolute -translate-y-6"/>
                     </div>
                 </>
             )}
