@@ -24,14 +24,16 @@ export const UserLoginAction = unauthenticatedAction
             redirectTo: DEFAULT_LOGIN_REDIRECT,
         })
 
-    }catch(error){
-        if(error instanceof AuthError){
-            switch(error.type){
+    }catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
                 case "CredentialsSignin":
-                    return { error: "Credenciales inválidas.."}
-                default: 
-                    return { error: "Hubo un error, Porfavor intenta más tarde.."}
+                    throw new Error("Credenciales inválidas."); // 👈 Ahora se lanza un error real
+                default:
+                    throw new Error("Hubo un error, por favor intenta más tarde.");
             }
         }
+        
+        throw error; // 👈 Lanza cualquier otro error
     }
 })

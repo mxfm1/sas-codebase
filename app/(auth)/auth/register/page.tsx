@@ -1,41 +1,21 @@
 'use client'
 
-import AuthCardWrapper from "@/components/auth/auth-card-wrapper";
-import CustomForm from "@/components/forms/custom-form";
-import CustomFormInput from "@/components/forms/custom-formfield";
-import { signUpSchema } from "@/lib/schemas/auth-schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "@/lib/schemas/auth-schemas";
 import { z } from "zod";
 import { registerUserAction } from "./actions";
+import RegisterForm from "./register-form";
 
 
-export type signUpType = z.infer <typeof signUpSchema>
+export type registerType = z.infer <typeof registerSchema>
 
 export default function SignUp(){
 
-    const subLogic = async(data:signUpType) => {
-        registerUserAction(data)
+    const subLogic = async(data:registerType) => {
+        await registerUserAction(data)
     }
     return (
         <>
-            <AuthCardWrapper title="Registrate" showSocials={true}>
-                <CustomForm
-                submitLogic={subLogic}
-                formButtonLabel="Registrate"
-                formConfig={{
-                    defaultValues: {
-                        email: "",
-                        password:"",
-                        confirmPassword: ""
-                    },
-                    resolver: zodResolver(signUpSchema)
-                }}
-            >
-                <CustomFormInput name="email" type="email"/>
-                <CustomFormInput name="password" type="password"/>
-                <CustomFormInput name="confirmPassword" type="password"/>
-                </CustomForm>
-            </AuthCardWrapper>
+            <RegisterForm formLogic={subLogic} />
         </>
 
         

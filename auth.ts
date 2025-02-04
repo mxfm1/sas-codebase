@@ -1,4 +1,5 @@
 import NextAuth, { User } from "next-auth";
+import Google from 'next-auth/providers/google'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import { getUserByEmail, getUserById } from "./use-cases/users";
 import bcrypt from 'bcryptjs'
@@ -7,8 +8,14 @@ import { db } from "./db";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const {handlers, auth, signIn,signOut} = NextAuth({
+
+    // @ts-expect-error: The DrizzleAdapter type conflicts with the version expected by next-auth
     adapter: DrizzleAdapter(db),
     providers : [
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
+        }),
         CredentialsProvider({
             name: "credentials",
             credentials: {

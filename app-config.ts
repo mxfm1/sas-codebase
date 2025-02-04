@@ -3,7 +3,8 @@
  */
 
 export const publicRoutes = [
-    "/"
+    "/",
+    "/inicio/contenido"
 ]
 
 /**
