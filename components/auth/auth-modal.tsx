@@ -62,6 +62,11 @@ export default function AuthModal({
                             </div>
                         </span>
                         </div>
+                        {loginError && (
+                            <div className="text-red-500">
+                                {loginError.message}
+                            </div>
+                        )}
                     </>
                 ) : 
                     <>
@@ -71,6 +76,11 @@ export default function AuthModal({
                         >   
                             Volver
                         </p>
+                        {registerError && (
+                            <div className="text-red-500">
+                                {registerError.message}
+                            </div>
+                        )}
                     </>
                 }
             </DialogContent>
