@@ -6,6 +6,11 @@ import bcrypt from 'bcryptjs'
 import { db } from "./db";
 
 import CredentialsProvider from "next-auth/providers/credentials";
+import { users } from "./db/schema";
+import { eq } from "drizzle-orm";
+
+console.log("secret",process.env.AUTH_SECRET)
+
 
 export const {handlers, auth, signIn,signOut} = NextAuth({
 
@@ -49,6 +54,16 @@ export const {handlers, auth, signIn,signOut} = NextAuth({
         strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60
     },
+    events: {
+        async linkAccount({user}){
+           if(!user.id){
+                return
+           }
+           await db.update(users)
+           .set({emailVerified: new Date()})
+           .where(eq(users.id,user.id))
+        }
+    },
     callbacks: {
         async session({token,session}){
             if(token.sub && session.user){
@@ -58,6 +73,7 @@ export const {handlers, auth, signIn,signOut} = NextAuth({
             if(token.role && session.user){
                 session.user.role = token.role as "ADMIN" | "USER";
             }
+            session.user.customField = "userCustomField"
             return session
         },
         async jwt({token}){
