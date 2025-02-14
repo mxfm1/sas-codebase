@@ -8,7 +8,7 @@ import { LockKeyhole, Mail } from "lucide-react";
 
 type LoginFormProps = {
     formLogic: (data:LoginSchemaType) => Promise<void>;
-    isPending?:boolean
+    isPending?:boolean;
 }
 
 export default function LoginForm({formLogic,isPending}:LoginFormProps){
@@ -26,8 +26,8 @@ export default function LoginForm({formLogic,isPending}:LoginFormProps){
                 formButtonLabel="Inicia sesión.."
                 isPending={isPending}
             >
-                <CustomFormInput name="email" type="text" placeholder="Email.." icon={Mail}/>
-                <CustomFormInput name="password" type="password" placeholder="Password.." icon={LockKeyhole}/>
+                <CustomFormInput name="email" type="text" placeholder="Correo.." icon={Mail}/>
+                <CustomFormInput name="password" type="password" placeholder="Contraseña.." icon={LockKeyhole}/>
             </CustomForm>
         </AuthCardWrapper>
     )

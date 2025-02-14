@@ -1,27 +1,25 @@
-'use client'
 
+import { signOut } from "@/auth"
+import ClientSignoutButton from "@/components/auth/components/client-signout-button"
+import { SignOutButton } from "@/components/auth/components/signout-button"
 import { useAuthContext } from "@/components/auth/context/auth-context"
-import { signOut } from "next-auth/react"
+import { CurrentUser } from "@/lib/session/server-session"
 
-export default function UserHomePage(){
-    const {user,isAuthenticated} = useAuthContext()
+export default async function UserHomePage(){
+    
+    const user = await CurrentUser()
+    
 
     return (
         <div>
-            {user?.email}
-            el usuario esta autenticado? {isAuthenticated && (<p>Si</p>)}
-            {
-                isAuthenticated && (
-                    <button onClick={()=> signOut({
-                        redirectTo: "/"
-                    })}>
-                        cerrar sesion
-                    </button>
-                )
-            }
-            <div className="mt-8 bg-slate-100 p-4 rounded-md">
-                {JSON.stringify(user)}
-            </div>
+            {JSON.stringify(user)}
+            aa
+
+           <div className="mt-12">
+                Usuario
+
+                <ClientSignoutButton />
+           </div>
         </div>
     )
 }

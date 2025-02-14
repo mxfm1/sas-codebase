@@ -31,7 +31,7 @@ export const middleware = async(req:NextRequest) => {
     }
 
     if(!isLoggedIn && !isPublicRoute){
-        return Response.redirect(new URL("/auth/login",nextUrl))
+        return Response.redirect(new URL("/auth",nextUrl))
     }
 }
 

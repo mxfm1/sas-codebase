@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string(),
-    confirmPassword: z.string(),
+    name: z.string().min(1,{message:"Porfavor ingresa un nombre.."}),
+    email: z.string().email({message: "Email inválido"}),
+    password: z.string().min(1,{message:"**Requerido"}),
+    confirmPassword: z.string().min(1,{message:"**Requerido.."}),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Las contraseñas no coinciden",
     path: ["confirmPassword"]

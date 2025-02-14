@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { Form } from "../ui/form"
-import { FieldValues, useForm, UseFormProps } from "react-hook-form";
+import { FieldValues, useForm, UseFormProps, FormProvider } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Loader } from 'lucide-react'
 import { cn } from "@/lib/utils";
@@ -31,19 +31,21 @@ export default function CustomForm<T extends FieldValues>({
     })
 
     return (
-        <Form {...formMethods}>
-            <form onSubmit={formMethods.handleSubmit(submitLogic)} className={cn("space-y-8", className)}>
-                {children}
-                <div className="flex items-center justify-center">
-                    <Button className="w-full mt-2">
-                        {isPending ? <Loader className="w-4 h-4 animate-spin" />
-                            : formButtonLabel
-                            ? formButtonLabel 
-                            : "Enviar.."
-                        }
-                    </Button>
-                </div>
-            </form>
-        </Form>
+        <FormProvider {...formMethods}>
+            <Form {...formMethods}>
+                <form onSubmit={formMethods.handleSubmit(submitLogic)} className={cn("space-y-8", className)}>
+                    {children}
+                    <div className="flex items-center justify-center">
+                        <Button className="w-full mt-2" type="submit">
+                            {isPending ? <Loader className="w-4 h-4 animate-spin" />
+                                : formButtonLabel
+                                ? formButtonLabel 
+                                : "Enviar.."
+                            }
+                        </Button>
+                    </div>
+                </form>
+            </Form>
+        </FormProvider>
     )
 }

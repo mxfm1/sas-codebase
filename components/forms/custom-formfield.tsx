@@ -27,7 +27,7 @@ export default function CustomFormInput({
             name={name}
             control={control}
             render={({field}) => (
-                <>
+                <div className="flex flex-col w-full">
                     <FormControl>
                         <div className="relative">
                             {Icon && (<Icon className="w-5 h-5 absolute top-1/2 -translate-y-1/2 left-2 text-slate-500" />)}
@@ -36,15 +36,13 @@ export default function CustomFormInput({
                                 type={type}
                                 {...field}
                                 className={cn(
-                                    "",Icon ? "pl-8" : ""
+                                    "w-full",Icon ? "pl-8" : ""
                                 )}
                             />
                         </div>
                     </FormControl>
-                    <div className="relative">
-                        <FormMessage className="absolute -translate-y-6"/>
-                    </div>
-                </>
+                    <FormMessage className="text-red-500 mt-2 text-sm" />
+                </div>
             )}
         />
     )

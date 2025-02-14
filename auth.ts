@@ -9,9 +9,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
 
-console.log("secret",process.env.AUTH_SECRET)
-
-
 export const {handlers, auth, signIn,signOut} = NextAuth({
 
     // @ts-expect-error: The DrizzleAdapter type conflicts with the version expected by next-auth
