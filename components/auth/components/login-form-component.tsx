@@ -1,6 +1,7 @@
 'use client'
 
 import { useServerAction } from "zsa-react"
+import { useSearchParams } from "next/navigation"
 import LoginForm from "../forms/login-form"
 import { LoginSchemaType } from "../types/auth"
 import { UserLoginAction } from "@/app/(auth)/auth/actions"
@@ -15,6 +16,10 @@ export default function LoginFormComponent({
     changeModalType
 }:LoginFormComponentProps){
     
+    const searchParams = useSearchParams()
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinked" 
+    ? "Este correo ya está siendo utilizado. Porfavor intenta con otro.." : ""
+
     const {execute,isPending,error} = useServerAction(UserLoginAction)
 
     const loginFormLogic = async(data:LoginSchemaType) => {
@@ -24,9 +29,14 @@ export default function LoginFormComponent({
         <>
             <LoginForm formLogic={loginFormLogic} isPending={isPending} />
             <div className="h-10 ">
+            {urlError && (
+                <div className="text-red-500 text-sm">
+                    {urlError}
+                </div>
+            )}
             {error && (
-                    <UserAuthFeedback error={error} />
-                )}
+                <UserAuthFeedback error={error || urlError} />
+            )}
            </div>
             <div className="fixed bottom-40 right-5">
                 <span className="text-sm text-gray-500 dark:text-gray-400">¿No tienes cuenta?</span>

@@ -1,8 +1,10 @@
 'use client'
 
+import { toCamelCase } from "@/lib/text-fn";
 import { cn } from "@/lib/utils";
 import { User } from "next-auth";
 import { usePathname } from "next/navigation";
+import ProfileAvatar from "../avatar/profile-avatar";
 
 type SidebarProps = {
     user: User
@@ -24,7 +26,10 @@ export default function Sidebar({
         <div className={cn(
             "w-60 border-r shadow-xl z-30 h-screen "
         )}>
-            <h1 className="text-center">{user.name}</h1>
+            <div className="flex items-center">
+                <ProfileAvatar imageURL={user.image ?? ""} />
+                <h1 className="text-center pt-4">{toCamelCase(user.name ?? "")}</h1>
+            </div>
         </div>
     )
 }

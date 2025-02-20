@@ -13,6 +13,10 @@ export const {handlers, auth, signIn,signOut} = NextAuth({
 
     // @ts-expect-error: The DrizzleAdapter type conflicts with the version expected by next-auth
     adapter: DrizzleAdapter(db),
+    pages: {
+        signIn: "/auth",
+        error: "/auth/error"
+    },
     providers : [
         Google({
             clientId: process.env.AUTH_GOOGLE_ID,
@@ -41,7 +45,9 @@ export const {handlers, auth, signIn,signOut} = NextAuth({
                     id:user.id,
                     name: user.name,
                     email:user.email,
-                    role: user.role as "ADMIN" | "USER"
+                    image: user.image,
+                    role: user.role as "ADMIN" | "USER",
+                    emailVerified: user.emailVerified,
                 } as User
             }
         })
@@ -66,11 +72,14 @@ export const {handlers, auth, signIn,signOut} = NextAuth({
             if(token.sub && session.user){
                 session.user.id = token.sub
             }
-
+            if(token.email && session.user){
+                session.user.email = token.email
+            }
+            
             if(token.role && session.user){
                 session.user.role = token.role as "ADMIN" | "USER";
             }
-            session.user.customField = "userCustomField"
+            session.user.emailVerified = token.emailVerified as Date
             return session
         },
         async jwt({token}){
@@ -78,6 +87,7 @@ export const {handlers, auth, signIn,signOut} = NextAuth({
             const user = await getUserById(token.sub)
             if(!user) return token
             token.role = (user.role ?? "USER") as "ADMIN" | "USER";
+            token.emailVerified = user.emailVerified ?? null
             return token
         }
     }

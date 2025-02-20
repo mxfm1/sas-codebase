@@ -9,6 +9,7 @@ import {
     pgEnum,
     type AnyPgColumn,
     uniqueIndex,
+    unique,
     uuid
   } from "drizzle-orm/pg-core"
   import type { AdapterAccount } from "next-auth/adapters"
@@ -106,6 +107,13 @@ import {
     ]
   )
 
-  export const testTable = pgTable("test",{
-    id: uuid().defaultRandom()
-  })
+export const verifyToken = pgTable("verifyToken",{
+  id: uuid().primaryKey().notNull().defaultRandom(),
+  email: text().notNull(),
+  token: text().notNull().unique(),
+  expires: timestamp("expires",{mode:"date"}).notNull()
+},(table) => {
+  return {
+    uniqueEmailToken: unique("unique_email_token").on(table.email,table.token)
+  }
+})
