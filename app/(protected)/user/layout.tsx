@@ -6,7 +6,7 @@ export default function Layout({children}:{children:ReactNode}){
     return (
         <div className="flex">
             <SidebarContent />
-            <div className="w-full">
+            <div className="w-full mx-12 mt-8">
                 {children}
             </div>
         </div>

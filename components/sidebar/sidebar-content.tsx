@@ -8,6 +8,7 @@ export default async function SidebarContent(){
     if(!user){
         return null
     }
+    
     return (
         <Sidebar user={user} />
     )

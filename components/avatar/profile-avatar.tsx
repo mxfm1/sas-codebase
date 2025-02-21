@@ -1,16 +1,28 @@
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Image from "next/image";
 
 type ProfileAvatarProps = {
-    imageURL?:string;
+    imageURL:string | null;
+    width?:number;
+    height?:number;
 }
 
 export default function ProfileAvatar({
-    imageURL
+    imageURL,
+    width=80,
+    height=80
 }:ProfileAvatarProps){
+
+    const getProfileImage = (imageURL:string | null) => {
+        return imageURL ? imageURL : "/new-profile.png"
+    }
+
     return (
-        <Avatar>
-            <AvatarFallback className=""/>
-            <AvatarImage src={imageURL ? imageURL : "/profile.png"} className="w-32 h-32"/>
-        </Avatar>
+        <Image 
+            src={getProfileImage(imageURL)}
+            alt="profile-image"
+            width={width}
+            height={height}
+            className=" object-cover rounded-full"
+        />
     )
 }

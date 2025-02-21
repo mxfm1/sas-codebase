@@ -7,7 +7,6 @@ import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
 
 type CustomFormInputProps = {
-    label?:string;
     name:string;
     placeholder?:string;
     type:string;
@@ -18,7 +17,7 @@ export default function CustomFormInput({
     name,
     placeholder,
     type,
-    icon:Icon
+    icon:Icon,
 }:CustomFormInputProps){
 
     const { control } = useFormContext()

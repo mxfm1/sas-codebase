@@ -5,6 +5,10 @@ import { cn } from "@/lib/utils";
 import { User } from "next-auth";
 import { usePathname } from "next/navigation";
 import ProfileAvatar from "../avatar/profile-avatar";
+import Separator from "../separator";
+import UserSidebarRoutes from "./user-sidebar-routes";
+import LogoSection from "./logo-section";
+import ProfileButton from "./profile-button";
 
 type SidebarProps = {
     user: User
@@ -24,11 +28,15 @@ export default function Sidebar({
 
     return (
         <div className={cn(
-            "w-60 border-r shadow-xl z-30 h-screen "
+            "w-16 md:w-60 border-r shadow-xl z-30  h-dvh sticky top-0 flex flex-col justify-center"
         )}>
-            <div className="flex items-center">
-                <ProfileAvatar imageURL={user.image ?? ""} />
-                <h1 className="text-center pt-4">{toCamelCase(user.name ?? "")}</h1>
+            <LogoSection logoURL="/brand-logo.png" brandName="Builder"/>
+            <Separator />
+            <div className="mx-2">
+                <UserSidebarRoutes />
+            </div>
+            <div className="mt-auto mb-8 px-2">
+                <ProfileButton name={user.name ?? null} email={user.email ?? null} imageURL={user.image} />
             </div>
         </div>
     )
