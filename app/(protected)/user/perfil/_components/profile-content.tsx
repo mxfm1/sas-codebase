@@ -6,7 +6,7 @@ import { User } from 'next-auth'
 import ProfileAvatar from '@/components/avatar/profile-avatar'
 import CustomFormInput from '@/components/forms/custom-formfield'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ProfileSchema } from '@/lib/schemas/profile-schemas'
+import { ProfileSchema } from '@/app/(protected)/onboarding/profile/_components/client-profile-form-page'
 import { Mail, User2, UserCheckIcon } from 'lucide-react'
 
 type ProfileContentProps = {
@@ -44,6 +44,7 @@ const ProfileContent = ({
         >
             <div className='flex items-center space-x-2'>
                 <CustomFormInput name="name" type='text' icon={User2}/>
+                <CustomFormInput name="lastName" type='text' icon={User2}/>
                 <CustomFormInput name="email" type='email' icon={Mail}/>
             </div>
         </CustomForm>

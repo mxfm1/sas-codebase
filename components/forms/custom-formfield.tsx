@@ -11,13 +11,16 @@ type CustomFormInputProps = {
     placeholder?:string;
     type:string;
     icon?:LucideIcon;
-}
+    className?:string
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default function CustomFormInput({
     name,
     placeholder,
     type,
     icon:Icon,
+    className,
+    ...props
 }:CustomFormInputProps){
 
     const { control } = useFormContext()
@@ -26,7 +29,7 @@ export default function CustomFormInput({
             name={name}
             control={control}
             render={({field}) => (
-                <div className="flex flex-col w-full">
+                <div className={cn("flex flex-col w-full",className)}>
                     <FormControl>
                         <div className="relative">
                             {Icon && (<Icon className="w-5 h-5 absolute top-1/2 -translate-y-1/2 left-2 text-slate-500" />)}
@@ -34,6 +37,7 @@ export default function CustomFormInput({
                                 placeholder={placeholder}
                                 type={type}
                                 {...field}
+                                {...props}
                                 className={cn(
                                     "w-full",Icon ? "pl-8" : ""
                                 )}

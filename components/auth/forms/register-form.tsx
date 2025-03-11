@@ -32,6 +32,7 @@ export default function RegisterForm({
                     formConfig={{
                         defaultValues: {
                             name:"",
+                            lastName:"",
                             email:"",
                             password: "",
                             confirmPassword: ""
@@ -41,8 +42,9 @@ export default function RegisterForm({
                 >   
                     <div className="flex gap-x-4">
                         <CustomFormInput name="name" type="text" placeholder="Nombre.." />
-                        <CustomFormInput name="email" type="email" placeholder="Correo.."/>
+                        <CustomFormInput name="lastName" type="text" placeholder="Segundo Nombre"/>
                     </div>
+                    <CustomFormInput name="email" type="email" placeholder="Correo.."/>
                     <CustomFormInput name="password" type="password" placeholder="Contraseña.."/>
                     <CustomFormInput name="confirmPassword" type="password" placeholder="Confirma tu contraseña.."/>
                 </CustomForm>

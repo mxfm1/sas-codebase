@@ -10,7 +10,9 @@ import {
     type AnyPgColumn,
     uniqueIndex,
     unique,
-    uuid
+    uuid,
+    PrimaryKey,
+    index
   } from "drizzle-orm/pg-core"
   import type { AdapterAccount } from "next-auth/adapters"
 
@@ -24,7 +26,8 @@ import {
     id: text("id")
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: text("name"),
+    name: text("name").notNull(),
+    lastName: text("lastName"),
     email: text("email").unique(),
     emailVerified: timestamp("emailVerified", { mode: "date" }),
     image: text("image"),
@@ -117,3 +120,24 @@ export const verifyToken = pgTable("verifyToken",{
     uniqueEmailToken: unique("unique_email_token").on(table.email,table.token)
   }
 })
+
+export const notifications = pgTable("notifications",{
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("userId").notNull().references( ()=> users.id),
+  type: text("type").notNull(),
+  resourceId: text("resourseId"),
+  isRead: boolean().default(false)
+})
+
+export const preferences = pgTable("preferences",{
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull().unique()
+})
+
+export const userPreferences = pgTable("userPreferences",{
+  userId: text("userId").notNull().references(() => users.id),
+  preferenceId: uuid("preference_id").notNull().references(() => preferences.id)
+},(table) => ({
+  pk: primaryKey({columns: [table.userId,table.preferenceId]}),
+  preferencesIndex: index("idx_preference_id").on(table.preferenceId)
+}))

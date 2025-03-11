@@ -40,7 +40,6 @@ export default function ProfileName({name}:{name:string | null}){
 function ProfileNameForm(){
 
     const formLogic = async(data:any) => {
-        console.log("data",data)
     }
     return (
         <CustomForm

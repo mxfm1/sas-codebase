@@ -10,8 +10,8 @@ import { AuthError } from "next-auth"
 export const registerUserAction = unauthenticatedAction
     .createServerAction()
     .input(registerSchema)
-    .handler(async({input:{name,email,password}}) => {
-        const newUser = await registerUserUseCase(name,email,password)
+    .handler(async({input:{name,lastName,email,password}}) => {
+        const newUser = await registerUserUseCase(name,lastName,email,password)
         if(newUser){
             await signIn("credentials",{
                 email,
@@ -20,8 +20,6 @@ export const registerUserAction = unauthenticatedAction
             })
         }
     })
-
-   
     
 export const UserLoginAction = unauthenticatedAction
     .createServerAction()

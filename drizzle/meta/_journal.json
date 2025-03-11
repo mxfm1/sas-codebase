@@ -22,6 +22,27 @@
       "when": 1739609269752,
       "tag": "0002_grey_lilith",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1740125567899,
+      "tag": "0003_lucky_titania",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1740946851292,
+      "tag": "0004_daily_yellow_claw",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1741329873333,
+      "tag": "0005_normal_slyde",
+      "breakpoints": true
     }
   ]
 }

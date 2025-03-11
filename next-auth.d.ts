@@ -9,6 +9,7 @@ declare module "next-auth"{
     interface User extends NextAuthUser{
         id:string;
         email:string;
+        lastName?:string;
         role: "ADMIN" | "USER",
         image:string | null;
         emailVerified:Date;

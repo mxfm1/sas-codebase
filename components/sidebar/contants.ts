@@ -1,6 +1,11 @@
-import { Settings, User } from "lucide-react";
+import { Home, Settings, User } from "lucide-react";
 
 export const UserProfileSidebar = [
+    {
+        label:"Inicio",
+        href: "/user/inicio",
+        icon: Home
+    },
     {
         label: "Perfil",
         href: "/user/perfil",

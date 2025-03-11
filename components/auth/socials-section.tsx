@@ -2,6 +2,7 @@
 import Image from "next/image"
 import { Button } from "../ui/button"
 import { signIn } from "next-auth/react"
+import { DEFAULT_LOGIN_REDIRECT } from "@/app-config"
 
 export default function SocialsSection(){
     return (
@@ -11,7 +12,7 @@ export default function SocialsSection(){
                 size="lg"
                 variant="outline"
                 onClick={() => {signIn("google",{
-                    
+                    redirectTo: "/onboarding/profile"
                 })}}
             >       
                 <p className="text-muted-foreground text-sm">Google</p>

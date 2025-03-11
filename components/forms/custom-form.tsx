@@ -14,6 +14,7 @@ type CustomFormType<T extends FieldValues> = {
     formButtonLabel?:string;
     isPending?:boolean;
     className?:string;
+    buttonClassName?:string;
 }
 
 export default function CustomForm<T extends FieldValues>({
@@ -22,7 +23,8 @@ export default function CustomForm<T extends FieldValues>({
     submitLogic,
     formButtonLabel,
     isPending,
-    className
+    className,
+    buttonClassName
 }:CustomFormType<T>){
 
     const formMethods = useForm<T>({
@@ -36,7 +38,7 @@ export default function CustomForm<T extends FieldValues>({
                 <form onSubmit={formMethods.handleSubmit(submitLogic)} className={cn("space-y-8", className)}>
                     {children}
                     <div className="flex items-center justify-center">
-                        <Button className="w-full mt-2" type="submit">
+                        <Button className={cn("mt-2 w-full",buttonClassName)} type="submit">
                             {isPending ? <Loader className="w-4 h-4 animate-spin" />
                                 : formButtonLabel
                                 ? formButtonLabel 

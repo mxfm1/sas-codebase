@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { AuthContextProvider } from "@/components/auth/context/auth-context";
 import { SessionProvider } from "next-auth/react";
 import { AuthModalContextProvider } from "@/components/auth/context/modal-context";
+import TanstackProvider from "@/providers/tanstack-query";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,14 +32,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+       <TanstackProvider>
         <SessionProvider>
-          <AuthContextProvider>
-            <AuthModalContextProvider>
-              {children}
-              <Toaster />
-            </AuthModalContextProvider>
-          </AuthContextProvider>
-        </SessionProvider>
+            <AuthContextProvider>
+              <AuthModalContextProvider>
+                {children}
+                <Toaster />
+              </AuthModalContextProvider>
+            </AuthContextProvider>
+          </SessionProvider>
+       </TanstackProvider>
       </body>
     </html>
   );

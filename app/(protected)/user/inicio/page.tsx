@@ -4,11 +4,17 @@ import ClientSignoutButton from "@/components/auth/components/client-signout-but
 import { SignOutButton } from "@/components/auth/components/signout-button"
 import { useAuthContext } from "@/components/auth/context/auth-context"
 import { CurrentUser } from "@/lib/session/server-session"
+import ClientHomePage from "./_components/page"
+import { getUserPreferences } from "@/src/infraestructure/repositories/userPreferencesRepository"
+import { redirect } from "next/navigation"
 
 export default async function UserHomePage(){
     
     const user = await CurrentUser()
-    
+    if(!user || !user.id){
+        return redirect("/")
+    }
+    const userPreferences = await getUserPreferences(user.id)
 
     return (
         <div>
@@ -19,6 +25,8 @@ export default async function UserHomePage(){
                 Usuario
 
                 <ClientSignoutButton />
+
+                <ClientHomePage />
            </div>
         </div>
     )
